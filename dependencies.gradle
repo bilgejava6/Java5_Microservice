@@ -11,7 +11,7 @@ ext {
             postgreSql                  : "org.postgresql:postgresql:$versions.postgreSql",
             lombok                      : "org.projectlombok:lombok:$versions.lombok",
             mapstruct                   : "org.mapstruct:mapstruct:$versions.mapstruct",
-            mapstructPorcessor          : "org.mapstruct:mapstruct-processor:$versions.mapstruct",
+            mapstructProcessor          : "org.mapstruct:mapstruct-processor:$versions.mapstruct",
 
 
     ]
