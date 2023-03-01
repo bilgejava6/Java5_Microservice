@@ -1,2 +1,6 @@
 rootProject.name = 'Java5_Microservice'
+include 'AuthMicroService'
+include 'UserMicroService'
+include 'UrunMicroService'
+include 'ETicaretMicroService'
 
