@@ -19,6 +19,7 @@ public enum EErrorType {
     AUTH_PASSWORD_ERROR(1301,"Şifreler uyuşmuyor.",BAD_REQUEST),
     AUTH_USERNAME_ERROR(1302,"Kullanıcı adı zaten kayıtlıdır.",BAD_REQUEST),
     INTERNAL_ERROR(3000,"Sunucuda beklenmeyen hata",INTERNAL_SERVER_ERROR),
+    INVALID_TOKEN(4001,"Geçersiz token bilgisi",BAD_REQUEST),
     KULLANICI_BULUNAMADI(2301,"Aradığınız id ye ait kullanıcı bulunamamıştır",INTERNAL_SERVER_ERROR);
     private int code;
     private String message;

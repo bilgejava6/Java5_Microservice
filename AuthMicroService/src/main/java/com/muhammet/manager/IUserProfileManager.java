@@ -14,7 +14,7 @@ import static com.muhammet.constants.RestEndPoints.SAVE;
  */
 @FeignClient(
         name = "user-profile-service-feign",
-        url = "http://localhost:9093/user",
+        url = "${bu-benim-tanimim.userprofile-url}",
         decode404 = true
 )
 public interface IUserProfileManager {

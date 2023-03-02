@@ -4,9 +4,13 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://35.222.86.204:5432/AuthDB
-    username: postgres
-    password: root
+    url: ${JAVA5URL}
+    username: ${AUTH_DB_USERNAME}
+    password: ${AUTH_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
+
+bu-benim-tanimim:
+  userprofile-url: ${USERPROFILEURL}
+  bunedirki: "buraya bir şeyler yazabilirsiniz."

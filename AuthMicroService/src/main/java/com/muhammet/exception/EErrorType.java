@@ -18,6 +18,7 @@ public enum EErrorType {
     BAD_REQUEST_ERROR(1201,"Geçersiz Parametre Girişi Yaptınız",BAD_REQUEST),
     AUTH_PASSWORD_ERROR(1301,"Şifreler uyuşmuyor.",BAD_REQUEST),
     AUTH_USERNAME_ERROR(1302,"Kullanıcı adı zaten kayıtlıdır.",BAD_REQUEST),
+    AUTH_LOGIN_ERROR(1303,"Kullanıcı adı ya da şifre hatalıdır",BAD_REQUEST),
     INTERNAL_ERROR(3000,"Sunucuda beklenmeyen hata",INTERNAL_SERVER_ERROR),
     KULLANICI_BULUNAMADI(2301,"Aradığınız id ye ait kullanıcı bulunamamıştır",INTERNAL_SERVER_ERROR);
     private int code;
