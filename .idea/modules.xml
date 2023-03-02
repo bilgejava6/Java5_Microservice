@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AuthMicroService/Java5_Microservice.AuthMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AuthMicroService/Java5_Microservice.AuthMicroService.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ETicaretMicroService/Java5_Microservice.ETicaretMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ETicaretMicroService/Java5_Microservice.ETicaretMicroService.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UrunMicroService/Java5_Microservice.UrunMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/UrunMicroService/Java5_Microservice.UrunMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/UserMicroService/Java5_Microservice.UserMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/UserMicroService/Java5_Microservice.UserMicroService.main.iml" />
     </modules>
   </component>
