@@ -1,16 +1,8 @@
-server:
-  port: 9090
-
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: ${JAVA5URL}
-    username: ${AUTH_DB_USERNAME}
-    password: ${AUTH_DB_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: update
-
-bu-benim-tanimim:
-  userprofile-url: ${USERPROFILEURL}
-  bunedirki: "buraya bir şeyler yazabilirsiniz."
+  cloud:
+    config:
+      uri: http://localhost:8888
+  config:
+    import: "configserver:"
+  application:
+    name: auth-micro-service

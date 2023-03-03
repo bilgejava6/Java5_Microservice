@@ -12,6 +12,7 @@
         <module name="Java5_Microservice.AuthMicroService.main" />
         <module name="Java5_Microservice.ConfigServer.main" />
         <module name="Java5_Microservice.ETicaretMicroService.main" />
+        <module name="Java5_Microservice.ConfigServerGit.main" />
         <module name="Java5_Microservice.UrunMicroService.main" />
         <module name="Java5_Microservice.UserMicroService.main" />
       </profile>

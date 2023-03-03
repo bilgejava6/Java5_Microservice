@@ -4,4 +4,5 @@ include 'UserMicroService'
 include 'UrunMicroService'
 include 'ETicaretMicroService'
 include 'ConfigServer'
+include 'ConfigServerGit'
 
