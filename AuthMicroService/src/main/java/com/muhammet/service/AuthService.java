@@ -9,6 +9,7 @@ import com.muhammet.manager.IUserProfileManager;
 import com.muhammet.mapper.IAuthMapper;
 import com.muhammet.repository.IAuthRepository;
 import com.muhammet.repository.entity.Auth;
+import com.muhammet.utility.JwtTokenManager;
 import com.muhammet.utility.ServiceManager;
 import com.muhammet.utility.TokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IUserProfileManager userProfileManager;
     @Autowired
     private TokenManager tokenManager;
+    @Autowired
+    private JwtTokenManager jwtTokenManager;
 
     public AuthService(IAuthRepository repository,IUserProfileManager userProfileManager){
         super(repository);
@@ -32,11 +35,11 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if(repository.isUsername(dto.getUsername()))
             throw new AuthException(EErrorType.AUTH_USERNAME_ERROR);
        Auth auth = save(IAuthMapper.INSTANCE.fromRegisterDto(dto));
-       Boolean result = userProfileManager.save(UserSaveResquestDto.builder()
+       userProfileManager.save(UserSaveResquestDto.builder()
                        .authid(auth.getId())
                        .email(auth.getEmail())
                        .username(auth.getUsername())
-               .build()).getBody();
+               .build());
        return true;
    }
 
@@ -44,6 +47,9 @@ public class AuthService extends ServiceManager<Auth,Long> {
       Optional<Auth> auth =  repository.findOptionalByUsernameAndPassword(dto.getUsername(),dto.getPassword());
       if(auth.isEmpty())
           throw new AuthException(EErrorType.AUTH_LOGIN_ERROR);
-      return tokenManager.createToken(auth.get().getId());
+      Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
+      if(token.isEmpty())
+          throw new AuthException(EErrorType.TOKEN_ERROR);
+      return token.get();
    }
 }
