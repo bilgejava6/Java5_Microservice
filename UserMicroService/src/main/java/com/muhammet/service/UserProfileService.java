@@ -7,6 +7,7 @@ import com.muhammet.exception.UserException;
 import com.muhammet.mapper.IUserProfileMapper;
 import com.muhammet.repository.IUserProfileRepository;
 import com.muhammet.repository.entity.UserProfile;
+import com.muhammet.utility.JwtTokenManager;
 import com.muhammet.utility.ServiceManager;
 import com.muhammet.utility.TokenManager;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ import java.util.Optional;
 @Service
 public class UserProfileService extends ServiceManager<UserProfile,Long> {
     private final IUserProfileRepository repository;
-    private final TokenManager tokenManager;
+
+    private final JwtTokenManager jwtTokenManager;
     public UserProfileService(IUserProfileRepository repository,
-                              TokenManager tokenManager){
+                              JwtTokenManager jwtTokenManager
+                              ){
         super(repository);
         this.repository=repository;
-        this.tokenManager = tokenManager;
+        this.jwtTokenManager = jwtTokenManager;
     }
     public Boolean saveDto(UserSaveResquestDto dto){
         UserProfile userProfile= IUserProfileMapper.INSTANCE.toUserProfile(dto);
@@ -31,10 +34,12 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
     }
 
     public List<UserProfile> findAll(String token){
-        Long authid = tokenManager.getDecodeToken(token);
-        Optional<UserProfile> userProfile = repository.findOptionalByAuthid(authid);
-        if(userProfile.isEmpty())
+        Optional<Long> authid = jwtTokenManager.getIdFromToken(token);
+        if(authid.isEmpty())
             throw new UserException(EErrorType.INVALID_TOKEN);
+        Optional<UserProfile> userProfile = repository.findOptionalByAuthid(authid.get());
+        if(userProfile.isEmpty())
+            throw new UserException(EErrorType.INVALID_TOKEN,"Token için gönderilen kullanıcı sistemde kayıtlı değildir.");
         return findAll();
     }
 }
