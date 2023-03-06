@@ -32,5 +32,9 @@ ext {
             // Güvenlik
             jwt                         : "com.auth0:java-jwt:$versions.jwt",
 
+            // Zipkin Server
+            springCloudSleuth           : "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
+            springCloudSleuthZipkin     : "org.springframework.cloud:spring-cloud-sleuth-zipkin:$versions.springCloud",
+
     ]
 }

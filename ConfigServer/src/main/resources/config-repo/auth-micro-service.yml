@@ -2,6 +2,11 @@ server:
   port: 9090
 
 spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: auth-micro-service
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/AuthDB
@@ -12,5 +17,5 @@ spring:
       ddl-auto: update
 
 bu-benim-tanimim:
-  userprofile-url: ${USERPROFILEURL}
+  userprofile-url: http://localhost:9093/api/v1/user
   bunedirki: "buraya bir şeyler yazabilirsiniz."
