@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.muhammet.constants.RestEndPoints.*;
 @RestController
-@RequestMapping(USER)
+@RequestMapping(API+VERSION+USER)
 @RequiredArgsConstructor
 public class UserProfileController {
     private final UserProfileService userProfileService;
@@ -27,4 +27,5 @@ public class UserProfileController {
     public ResponseEntity<List<UserProfile>> getAll(@Valid BaseRequestDto dto){
         return ResponseEntity.ok(userProfileService.findAll(dto.getToken()));
     }
+
 }

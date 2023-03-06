@@ -5,4 +5,5 @@ include 'UrunMicroService'
 include 'ETicaretMicroService'
 include 'ConfigServer'
 include 'ConfigServerGit'
+include 'ApiGatewayService'
 
