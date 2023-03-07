@@ -1,6 +1,7 @@
 package com.muhammet.mapper;
 
 import com.muhammet.dto.request.UserSaveResquestDto;
+import com.muhammet.rabbitmq.model.CreateUser;
 import com.muhammet.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,4 +14,6 @@ public interface IUserProfileMapper {
     IUserProfileMapper INSTANCE = Mappers.getMapper(IUserProfileMapper.class);
 
     UserProfile toUserProfile(final UserSaveResquestDto dto);
+    UserProfile toUserProfile(final CreateUser createUser);
+
 }

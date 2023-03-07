@@ -7,6 +7,8 @@ import com.muhammet.exception.AuthException;
 import com.muhammet.exception.EErrorType;
 import com.muhammet.manager.IUserProfileManager;
 import com.muhammet.mapper.IAuthMapper;
+import com.muhammet.rabbitmq.model.CreateUser;
+import com.muhammet.rabbitmq.producer.CreateUserProducer;
 import com.muhammet.repository.IAuthRepository;
 import com.muhammet.repository.entity.Auth;
 import com.muhammet.utility.JwtTokenManager;
@@ -21,22 +23,31 @@ import java.util.Optional;
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository repository;
     private final IUserProfileManager userProfileManager;
+    private final CreateUserProducer createUserProducer;
     @Autowired
     private TokenManager tokenManager;
     @Autowired
     private JwtTokenManager jwtTokenManager;
 
-    public AuthService(IAuthRepository repository,IUserProfileManager userProfileManager){
+    public AuthService(IAuthRepository repository,
+                       IUserProfileManager userProfileManager,
+                       CreateUserProducer createUserProducer){
         super(repository);
         this.repository = repository;
         this.userProfileManager = userProfileManager;
+        this.createUserProducer = createUserProducer;
     }
    public boolean register(RegisterRequestDto dto){
         if(repository.isUsername(dto.getUsername()))
             throw new AuthException(EErrorType.AUTH_USERNAME_ERROR);
        Auth auth = save(IAuthMapper.INSTANCE.fromRegisterDto(dto));
-       userProfileManager.save(UserSaveResquestDto.builder()
-                       .authid(auth.getId())
+//       userProfileManager.save(UserSaveResquestDto.builder()
+//                       .authid(auth.getId())
+//                       .email(auth.getEmail())
+//                       .username(auth.getUsername())
+//               .build());
+       createUserProducer.createSendMessage(CreateUser.builder()
+                       .autid(auth.getId())
                        .email(auth.getEmail())
                        .username(auth.getUsername())
                .build());
