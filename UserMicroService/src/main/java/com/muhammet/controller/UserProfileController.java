@@ -28,4 +28,14 @@ public class UserProfileController {
         return ResponseEntity.ok(userProfileService.findAll(dto.getToken()));
     }
 
+    @GetMapping("/getname")
+    public ResponseEntity<String> getUpperCaseName(String name){
+        return ResponseEntity.ok(userProfileService.getUpperName(name));
+    }
+
+    @GetMapping("/clearcache")
+    public ResponseEntity<Void> clearCache(){
+        userProfileService.clearCache();
+        return  ResponseEntity.ok().build();
+    }
 }

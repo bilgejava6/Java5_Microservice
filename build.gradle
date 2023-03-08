@@ -47,6 +47,7 @@ allprojects{
             implementation libs.springCloudSleuth
             implementation libs.springCloudSleuthZipkin
 
+
     }
 }
 

@@ -10,6 +10,8 @@ import com.muhammet.repository.entity.UserProfile;
 import com.muhammet.utility.JwtTokenManager;
 import com.muhammet.utility.ServiceManager;
 import com.muhammet.utility.TokenManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +43,21 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
         if(userProfile.isEmpty())
             throw new UserException(EErrorType.INVALID_TOKEN,"Token için gönderilen kullanıcı sistemde kayıtlı değildir.");
         return findAll();
+    }
+
+
+    @Cacheable(value = "getUpperName")
+    public String getUpperName(String name){
+        try{
+            Thread.sleep(3000);
+        }catch (Exception exception){
+
+        }
+        return name.toUpperCase();
+    }
+
+    @CacheEvict(value ="getUpperName", allEntries = true )
+    public void clearCache(){
+        System.out.println("Tüm Cache temizlendi.");
     }
 }
