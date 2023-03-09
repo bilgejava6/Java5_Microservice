@@ -14,6 +14,10 @@ import com.muhammet.utility.ServiceManager;
 import com.muhammet.utility.TokenManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,5 +73,38 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
     @CacheEvict(value ="getUpperName", allEntries = true )
     public void clearCache(){
         System.out.println("Tüm Cache temizlendi.");
+    }
+
+    /**
+     * Tüm Kullanıcı Listesini belli kriterlere göre sayfalı ve sıralı şekilde döner
+     * @param direction -> (ASC, DESC)  -> a..Z, Z..a, 0..9, 9..0
+     * @param currentPage -> sayfalama yapılmış ise getirmek istenilen sayfayı niteler.
+     *                    10.000/50 [1-200 sayfa] 5. sayfa 251.-300 arasını verir.
+     * @param pageSize -> her istek te getirilecek data sayısını belirtir. 10.000 kaydın oldeuğu bir listede
+     *                 50 yazarsanız, kayıtları size 50 şer olarak getirir.
+     * @param sortingParameter -> Hangi alanda sıralama yapmak istiyorsunuz?
+     * @return
+     */
+    public Page<UserProfile> findAll(String direction, Integer currentPage, int pageSize, String sortingParameter){
+        Sort sort = null;
+        Pageable pageable = null;
+        if(!sortingParameter.isEmpty()){
+            direction = direction == null ? "ASC" : direction;
+            sort = Sort.by(Sort.Direction.fromString(direction),sortingParameter);
+        }
+        /**
+         * 1- sıralama yap, sayfayı getir.
+         * 2- sıralama yap, sayfa belirtmemiş
+         * 3- sıralama belirtmemiz, sayfa getir.
+         * Sayfalama yapmak zorundayız.
+         */
+        if(sort!=null && currentPage!=null){
+            pageable = PageRequest.of(currentPage,pageSize == 0 ? 10 : pageSize,sort);
+        } else if(sort==null && currentPage!=null){
+            pageable = PageRequest.of(currentPage,pageSize == 0 ? 10 : pageSize);
+        }else{
+            pageable = PageRequest.of(0,pageSize == 0 ? 10 : pageSize);
+        }
+        return repository.findAll(pageable);
     }
 }
