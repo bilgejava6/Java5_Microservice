@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @Builder
 public class CreateUser implements Serializable {
-    Long autid;
+    Long authid;
     String username;
     String email;
 }

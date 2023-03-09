@@ -1,6 +1,17 @@
 server:
   port: 9090
 
+logging:
+  level:
+    org.springframework: DEBUG
+    com.muhammet: INFO
+    root: DEBUG
+  file:
+    name: auth-service.log
+  logback:
+    rollingpolicy:
+      max-file-size: 20MB
+
 spring:
   rabbitmq:
     host: localhost
@@ -15,8 +26,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/AuthDB
-    username: ${AUTH_DB_USERNAME}
-    password: ${AUTH_DB_PASSWORD}
+    username: postgres
+    password: root
   jpa:
     hibernate:
       ddl-auto: update

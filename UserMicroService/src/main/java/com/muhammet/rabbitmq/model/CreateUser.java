@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Builder
 @ToString
 public class CreateUser implements Serializable {
-    Long autid;
+    Long authid;
     String username;
     String email;
 }

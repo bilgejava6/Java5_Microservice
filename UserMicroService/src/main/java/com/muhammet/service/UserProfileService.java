@@ -4,7 +4,9 @@ import com.muhammet.dto.request.BaseRequestDto;
 import com.muhammet.dto.request.UserSaveResquestDto;
 import com.muhammet.exception.EErrorType;
 import com.muhammet.exception.UserException;
+import com.muhammet.manager.IElasticServiceManager;
 import com.muhammet.mapper.IUserProfileMapper;
+import com.muhammet.rabbitmq.model.CreateUser;
 import com.muhammet.repository.IUserProfileRepository;
 import com.muhammet.repository.entity.UserProfile;
 import com.muhammet.utility.JwtTokenManager;
@@ -20,19 +22,27 @@ import java.util.Optional;
 @Service
 public class UserProfileService extends ServiceManager<UserProfile,Long> {
     private final IUserProfileRepository repository;
-
+    private final IElasticServiceManager elasticServiceManager;
     private final JwtTokenManager jwtTokenManager;
     public UserProfileService(IUserProfileRepository repository,
-                              JwtTokenManager jwtTokenManager
+                              JwtTokenManager jwtTokenManager,
+                              IElasticServiceManager elasticServiceManager
                               ){
         super(repository);
         this.repository=repository;
         this.jwtTokenManager = jwtTokenManager;
+        this.elasticServiceManager=elasticServiceManager;
     }
     public Boolean saveDto(UserSaveResquestDto dto){
         UserProfile userProfile= IUserProfileMapper.INSTANCE.toUserProfile(dto);
         save(userProfile);
+        elasticServiceManager.save(IUserProfileMapper.INSTANCE.fromUserProfile(userProfile));
         return true;
+    }
+    public void save(CreateUser createUser){
+        UserProfile userProfile = IUserProfileMapper.INSTANCE.toUserProfile(createUser);
+        save(userProfile);
+        elasticServiceManager.save(IUserProfileMapper.INSTANCE.fromUserProfile(userProfile));
     }
 
     public List<UserProfile> findAll(String token){

@@ -47,7 +47,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
 //                       .username(auth.getUsername())
 //               .build());
        createUserProducer.createSendMessage(CreateUser.builder()
-                       .autid(auth.getId())
+                       .authid(auth.getId())
                        .email(auth.getEmail())
                        .username(auth.getUsername())
                .build());
