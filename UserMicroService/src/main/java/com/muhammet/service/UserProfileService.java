@@ -85,7 +85,8 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
      * @param sortingParameter -> Hangi alanda sıralama yapmak istiyorsunuz?
      * @return
      */
-    public Page<UserProfile> findAll(String direction, Integer currentPage, int pageSize, String sortingParameter){
+    public Page<UserProfile> findAll(String direction, Integer currentPage,
+                                     int pageSize, String sortingParameter){
         Sort sort = null;
         Pageable pageable = null;
         if(!sortingParameter.isEmpty()){
@@ -106,5 +107,9 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
             pageable = PageRequest.of(0,pageSize == 0 ? 10 : pageSize);
         }
         return repository.findAll(pageable);
+    }
+
+    public Optional<UserProfile> findByAuthId(Long authid){
+        return repository.findOptionalByAuthid(authid);
     }
 }
