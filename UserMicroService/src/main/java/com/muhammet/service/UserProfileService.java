@@ -46,7 +46,7 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
     public void save(CreateUser createUser){
         UserProfile userProfile = IUserProfileMapper.INSTANCE.toUserProfile(createUser);
         save(userProfile);
-        elasticServiceManager.save(IUserProfileMapper.INSTANCE.fromUserProfile(userProfile));
+        //elasticServiceManager.save(IUserProfileMapper.INSTANCE.fromUserProfile(userProfile));
     }
 
     public List<UserProfile> findAll(String token){
