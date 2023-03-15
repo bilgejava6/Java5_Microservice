@@ -22,6 +22,8 @@ public class UserMicroServiceSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf().disable();
+        httpSecurity.cors().disable();
         httpSecurity
                 .authorizeRequests() // Gelen isteklere kimlik doğrulama işlemi yapalım
                 .antMatchers("/api/v1/user/**") // buraya yazdığım istek url si ile eşleşiyor ise
@@ -30,8 +32,12 @@ public class UserMicroServiceSecurityConfig {
                 .permitAll(); // her gelen e izin ver.
         /**
          * Eğer bir yer erişim kısıtlı ve oturum açma isteği var ise bunun için bir form çıkartır.
+         * !!! DİKKAT!!!
+         * Form -> Post isteklerinde csrf aktif ise mutlaka post isteği ile birlikte
+         * gönderilmesi gerekmektedir. bu nedenle RestApi isteklerinde csrf kapatılmalıdır.
+         *
          */
-        // httpSecurity.csrf().disable();
+
         // httpSecurity.formLogin();
         httpSecurity.addFilterBefore(getJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

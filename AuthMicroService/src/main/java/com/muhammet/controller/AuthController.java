@@ -23,6 +23,7 @@ public class AuthController {
     private String ifade;
 
     @PostMapping(REGISTER)
+    @CrossOrigin("*")
     public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestDto dto){
         if(!dto.getPassword().equals(dto.getRepassword()))
             throw new AuthException(EErrorType.AUTH_PASSWORD_ERROR);
@@ -30,6 +31,7 @@ public class AuthController {
         return ResponseEntity.ok(true);
     }
     @PostMapping(LOGIN)
+    @CrossOrigin("*")
     public ResponseEntity<String> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }

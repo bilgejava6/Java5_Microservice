@@ -18,6 +18,7 @@ import static com.muhammet.constants.RestEndPoints.*;
 @RestController
 @RequestMapping(API+VERSION+USER)
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UserProfileController {
     private final UserProfileService userProfileService;
 
@@ -27,6 +28,7 @@ public class UserProfileController {
     }
 
     @GetMapping(FINDALL)
+    @CrossOrigin("*")
     public ResponseEntity<List<UserProfile>> getAll(@Valid BaseRequestDto dto){
         return ResponseEntity.ok(userProfileService.findAll(dto.getToken()));
     }
@@ -42,6 +44,7 @@ public class UserProfileController {
         return  ResponseEntity.ok().build();
     }
     @PostMapping(FINDALLPAGE)
+    @CrossOrigin("*")
     public ResponseEntity<Page<UserProfile>> findAllPage(@RequestBody  FindAllPageRequestDto dto){
         return ResponseEntity.ok(userProfileService.findAll(dto.getDirection(), dto.getCurrentPage(),
                 dto.getPageSize(), dto.getSortingParameter()));

@@ -3,6 +3,10 @@ server:
 
 
 spring:
+  logging:
+    root: DEBUG
+    file:
+      name: userservice.log
   security:
     user:
       name: muhammet
@@ -19,9 +23,13 @@ spring:
       name: user-micro-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/UserDB
+    url: jdbc:postgresql://35.222.86.204:5432/UserDB
     username: postgres
     password: root
   jpa:
     hibernate:
       ddl-auto: update
+
+redis:
+  host: "localhost"
+  port: 6379
