@@ -7,6 +7,7 @@ import com.muhammet.repository.entity.UserProfile;
 import com.muhammet.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,10 @@ import static com.muhammet.constants.RestEndPoints.*;
 @RestController
 @RequestMapping(API+VERSION+USER)
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = {
+        "http://10.4.0.24:80",
+        "http://10.8.10.112:80"
+},allowCredentials = "true")
 public class UserProfileController {
     private final UserProfileService userProfileService;
 
@@ -28,7 +32,6 @@ public class UserProfileController {
     }
 
     @GetMapping(FINDALL)
-    @CrossOrigin("*")
     public ResponseEntity<List<UserProfile>> getAll(@Valid BaseRequestDto dto){
         return ResponseEntity.ok(userProfileService.findAll(dto.getToken()));
     }
@@ -43,8 +46,7 @@ public class UserProfileController {
         userProfileService.clearCache();
         return  ResponseEntity.ok().build();
     }
-    @PostMapping(FINDALLPAGE)
-    @CrossOrigin("*")
+    @PostMapping(value = FINDALLPAGE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<UserProfile>> findAllPage(@RequestBody  FindAllPageRequestDto dto){
         return ResponseEntity.ok(userProfileService.findAll(dto.getDirection(), dto.getCurrentPage(),
                 dto.getPageSize(), dto.getSortingParameter()));

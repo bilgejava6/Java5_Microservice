@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<input type="text"  id="txtusername"> <br><br>
+<input type="text"  id="txtpassword"> <br><br>
+<button onclick="login()">Giriş</button>
+<br> <br>
+<input type="text" id="txttoken" style="width: 100% ">
+<script>
+  function login(){
+    const username = document.getElementById('txtusername').value;
+    const password = document.getElementById('txtpassword').value;
+    const txttoken = document.getElementById('txttoken');
+    fetch('http://34.132.77.145/auth/login',{
+       method: 'POST',
+       headers: {
+         "Content-Type": "application/json",
+
+       },
+       body: JSON.stringify({
+         'username': username,
+         'password': password
+       })
+     }).then((response)=>response.json())
+        .then((response)=>{
+           txttoken.value = response.token;
+        })
+
+  }
+</script>
+
+
+</body>
+</html>

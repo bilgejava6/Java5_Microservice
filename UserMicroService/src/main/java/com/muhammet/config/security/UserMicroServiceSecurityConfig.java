@@ -22,14 +22,17 @@ public class UserMicroServiceSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable();
-        httpSecurity.cors().disable();
+
         httpSecurity
+                .csrf().disable()
+                .cors()
+                .and()
                 .authorizeRequests() // Gelen isteklere kimlik doğrulama işlemi yapalım
                 .antMatchers("/api/v1/user/**") // buraya yazdığım istek url si ile eşleşiyor ise
                 .authenticated()// bunlara güvenlik uygula.
                 .anyRequest() // tüm istekleri ifade eder
-                .permitAll(); // her gelen e izin ver.
+                .permitAll()
+                .and().httpBasic(); // her gelen e izin ver.
         /**
          * Eğer bir yer erişim kısıtlı ve oturum açma isteği var ise bunun için bir form çıkartır.
          * !!! DİKKAT!!!
